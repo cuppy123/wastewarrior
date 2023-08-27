@@ -35,8 +35,8 @@
                 android:orientation="horizontal"
                 android:paddingTop="20dp">
 
-                <EditText
-                    android:id="@+id/editTextText2"
+                <TextView
+                    android:id="@+id/TextViewText2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -47,8 +47,8 @@
                     android:textColor="#4CAF50"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/editTextText"
+                <TextView
+                    android:id="@+id/TextViewText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -64,8 +64,8 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center">
 
-                <EditText
-                    android:id="@+id/editTextText4"
+                <TextView
+                    android:id="@+id/TextViewText4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -76,8 +76,8 @@
                     android:textColor="#4CAF50"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/editTextText5"
+                <TextView
+                    android:id="@+id/TextViewText5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -95,8 +95,8 @@
                 android:padding="20dp"
                 app:srcCompat="@drawable/logo" />
 
-            <EditText
-                android:id="@+id/editTextText45"
+            <TextView
+                android:id="@+id/TextViewText45"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -111,19 +111,21 @@
                 android:id="@+id/adminlogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/buttonshape"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/white"
                 android:text="ADMIN LOGIN"
-                android:textColor="#008A1F" />
+                android:textColor="#008A1F"
+                app:cornerRadius="20dp" />
 
             <Button
                 android:id="@+id/userlogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/buttonshape"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/white"
                 android:text="USER LOGIN"
-                android:textColor="#008A1F" />
+                android:textColor="#008A1F"
+                app:cornerRadius="20dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
