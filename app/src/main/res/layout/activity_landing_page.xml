@@ -115,6 +115,15 @@
                 android:backgroundTint="@color/white"
                 android:text="ADMIN LOGIN"
                 android:textColor="#008A1F" />
+
+            <Button
+                android:id="@+id/userlogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonshape"
+                android:backgroundTint="@color/white"
+                android:text="USER LOGIN"
+                android:textColor="#008A1F" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
