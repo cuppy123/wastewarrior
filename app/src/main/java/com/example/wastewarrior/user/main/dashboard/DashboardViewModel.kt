@@ -1,4 +1,4 @@
-package com.example.wastewarrior.main.dashboard
+package com.example.wastewarrior.user.main.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

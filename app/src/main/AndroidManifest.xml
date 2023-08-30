@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,28 +16,45 @@
         android:theme="@style/Theme.WasteWarrior"
         tools:targetApi="31">
         <activity
-            android:name=".auth.user.RegisterActivity"
+            android:name=".admin.AddSurpriseBagActivity"
             android:exported="false" />
         <activity
-            android:name=".auth.user.LoginActivity"
+            android:name=".admin.SurpriseBagsActivity"
             android:exported="false" />
         <activity
-            android:name=".auth.admin.LoginActivity"
+            android:name=".admin.MapActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB68BIJkMeQLuHc2eXW5UOVGnzIPKfs7Hg" />
+
+        <activity
+            android:name=".admin.RestaurantInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".auth.admin.RegisterActivity"
-            android:exported="false" />
+            android:name=".RegisterActivity"
+            android:exported="false"
+            android:theme="@style/AuthTheme" />
         <activity
-            android:name=".auth.LandingPageActivity"
+            android:name=".user.LoginActivity"
+            android:exported="false"
+            android:theme="@style/AuthTheme" />
+        <activity
+            android:name=".admin.LoginActivity"
+            android:exported="false"
+            android:theme="@style/AuthTheme" />
+        <activity
+            android:name=".LandingPageActivity"
             android:exported="true"
-            android:theme="@style/Theme.WasteWarrior">
+            android:theme="@style/AuthTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".user.MainActivity" />
     </application>
 
 </manifest>

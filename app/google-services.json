@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "345084385342",
+    "project_id": "wastewarrior-5fbbf",
+    "storage_bucket": "wastewarrior-5fbbf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345084385342:android:24bd69d6672ed3ad8d996f",
+        "android_client_info": {
+          "package_name": "com.example.wastewarrior"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "345084385342-riu96hdqkpi5ej3a294moenjb5cd826u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI47w1hT5aU_DQyCcMAPnQLbZJHl2_oKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "345084385342-riu96hdqkpi5ej3a294moenjb5cd826u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
