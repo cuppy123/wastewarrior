@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import com.example.wastewarrior.admin.LoginActivity
 import com.example.wastewarrior.databinding.ActivityLandingPageBinding
 
 class LandingPageActivity : AppCompatActivity() {
@@ -20,6 +21,13 @@ class LandingPageActivity : AppCompatActivity() {
         binding.register.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
+        binding.adminlogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+        binding.userlogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
 
 
 

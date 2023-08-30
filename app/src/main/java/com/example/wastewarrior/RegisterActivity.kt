@@ -41,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getDropDownView(position, convertView, parent)
                 val textView = view.findViewById<TextView>(android.R.id.text1)
-                textView.setTextColor(Color.WHITE) // Change text color here
+                textView.setTextColor(Color.BLACK) // Change text color here
                 return view
             }
         }
