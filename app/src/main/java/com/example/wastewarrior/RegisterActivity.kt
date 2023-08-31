@@ -75,6 +75,12 @@ class RegisterActivity : AppCompatActivity() {
                     if(selectedRole=="User"){
                         startActivity(Intent(this, MainActivity::class.java))
                     }else{
+                        val sharedPreferences = getSharedPreferences("MapPrefs", MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putFloat("latitude", 0F)
+                        editor.putFloat("longitude", 0F)
+                        editor.putString("name","")
+                        editor.apply()
                         startActivity(Intent(this, RestaurantInfoActivity::class.java))
                     }
                 } else {

@@ -1,7 +1,8 @@
-package com.example.wastewarrior.admin
+package com.example.wastewarrior.user.main.home
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,33 +12,35 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wastewarrior.R
+import com.example.wastewarrior.admin.SurpriseBagsActivity
 import com.example.wastewarrior.models.SurpriseBag
+import com.example.wastewarrior.user.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class SurpriseBagAdapter(private val surpriseBags: List<SurpriseBag>) :
-    RecyclerView.Adapter<SurpriseBagAdapter.SurpriseBagViewHolder>() {
+class SurpriseBagsClientAdapter(private val surpriseBags: List<SurpriseBag>) :
+    RecyclerView.Adapter<SurpriseBagsClientAdapter.SurpriseBagViewHolder>() {
     private val db = FirebaseFirestore.getInstance()
     inner class SurpriseBagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(surpriseBag: SurpriseBag) {
             val itemNameTextView = itemView.findViewById<TextView>(R.id.itemName)
             val itemQuantityTextView = itemView.findViewById<TextView>(R.id.itemQuantity)
-            val itemIsFavouriteTextView = itemView.findViewById<TextView>(R.id.itemIsFavourite)
             val itemPriceTextView = itemView.findViewById<TextView>(R.id.itemPrice)
-            itemView.findViewById<CardView>(R.id.add).setOnClickListener {
-                updateSurpriseBagByName(surpriseBag,itemView.context)
+            itemView.findViewById<CardView>(R.id.orderCard).setOnClickListener {
+                //updateSurpriseBagByName(surpriseBag,itemView.context)
+                addOrderToFirestore(surpriseBag,itemView.context)
+                addOrderToFirestore(surpriseBag,itemView.context)
             }
 
             itemNameTextView.text = surpriseBag.name
             itemQuantityTextView.text = surpriseBag.quantity.toString()+" left"
-            itemIsFavouriteTextView.text = if (surpriseBag.isFavourite) "Favourite" else "Not Favourite"
             itemPriceTextView.text = "£${surpriseBag.price}"
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurpriseBagViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_surprise_bag, parent, false)
+            .inflate(R.layout.item_surprise_bag_client, parent, false)
         return SurpriseBagViewHolder(itemView)
     }
 
@@ -59,20 +62,22 @@ class SurpriseBagAdapter(private val surpriseBags: List<SurpriseBag>) :
                     val surprises = documentSnapshot.get("surprises") as MutableList<HashMap<String, Any>>?
                     surprises?.let {
                         // Find the index of the surprise bag to be updated based on its name
+                        val current:SurpriseBag?=null
                         val indexToUpdate = it.indexOfFirst { surprise ->
                             surprise["name"] == updatedSurpriseBag.name
                         }
 
                         if (indexToUpdate != -1) {
                             val currentQuantity = it[indexToUpdate]["quantity"] as Long
-                            it[indexToUpdate]["quantity"] = currentQuantity + 1
+                            it[indexToUpdate]["quantity"] = currentQuantity - 1
 
-
-
+                            val current=it
                             restaurantRef.update("surprises", it)
                                 .addOnSuccessListener {
                                     showToast("Surprise bag updated successfully",context)
-                                    val intent = Intent(context, SurpriseBagsActivity::class.java)
+                                    addOrderToFirestore(updatedSurpriseBag,context)
+                                    addOrderToRestaurantFirestore(updatedSurpriseBag,context)
+                                    val intent = Intent(context, MainActivity::class.java)
                                     context.startActivity(intent)
                                 }
                                 .addOnFailureListener { exception ->
@@ -93,6 +98,47 @@ class SurpriseBagAdapter(private val surpriseBags: List<SurpriseBag>) :
 
     private fun showToast(message: String,context: Context) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+    private fun addOrderToFirestore(surpriseBag: SurpriseBag,context: Context) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        userId?.let {
+            val restaurantRef = db.collection("users").document(it)
+
+            // Retrieve the existing surprises list and update it
+
+            restaurantRef.set(surpriseBag.toHashMap()).addOnSuccessListener { documentSnapshot ->
+                Log.d("res", "Order profile added")
+                showToast("Order created.",context)
+            }.addOnFailureListener { exception ->
+                showToast("Error: ${exception.message}", context )
+            }
+        }
+    }
+    private fun addOrderToRestaurantFirestore(surpriseBag: SurpriseBag,context: Context) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        userId?.let {
+            val restaurantRef = db.collection("restaurants").document(it)
+
+            // Retrieve the existing surprises list and update it
+            restaurantRef.get().addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val surprises = documentSnapshot.get("orders") as MutableList<HashMap<String, Any>>?
+                    surprises?.add(surpriseBag.toHashMap())
+                    surprises?.let {
+                        restaurantRef.update("surprises", it)
+                            .addOnSuccessListener {
+                            }
+                            .addOnFailureListener { exception ->
+                            }
+                    }
+                } else {
+                }
+            }.addOnFailureListener { exception ->
+                showToast("Error: ${exception.message}",context)
+            }
+        }
     }
 
 }

@@ -103,7 +103,7 @@
             android:padding="40dp">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:capitalize="sentences"
@@ -114,7 +114,7 @@
                 app:cornerRadius="20dp" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Register instead?"
