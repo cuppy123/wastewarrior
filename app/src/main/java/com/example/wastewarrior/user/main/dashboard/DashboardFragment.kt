@@ -72,7 +72,8 @@ class DashboardFragment : Fragment(), OnMapReadyCallback {
                     restaurantList.add(restaurant)
                 }
 
-                val mapFragment = childFragmentManager.findFragmentById(R.id.mapContainer) as SupportMapFragment
+
+                val mapFragment = childFragmentManager.findFragmentById(R.id.mapContainerty) as SupportMapFragment
                 mapFragment.getMapAsync(this)
             }
             .addOnFailureListener { exception ->

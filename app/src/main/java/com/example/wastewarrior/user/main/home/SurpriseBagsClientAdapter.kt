@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -32,6 +34,9 @@ class SurpriseBagsClientAdapter(private val surpriseBags: List<SurpriseBag>) :
                 addOrderToFirestore(surpriseBag,itemView.context)
             }
 
+            itemView.findViewById<ImageView>(R.id.imageView4).setOnClickListener {
+                addFariteToFirestore(surpriseBag,itemView.context)
+            }
             itemNameTextView.text = surpriseBag.name
             itemQuantityTextView.text = surpriseBag.quantity.toString()+" left"
             itemPriceTextView.text = "£${surpriseBag.price}"
@@ -107,11 +112,48 @@ class SurpriseBagsClientAdapter(private val surpriseBags: List<SurpriseBag>) :
 
             // Retrieve the existing surprises list and update it
 
-            restaurantRef.set(surpriseBag.toHashMap()).addOnSuccessListener { documentSnapshot ->
-                Log.d("res", "Order profile added")
-                showToast("Order created.",context)
+            restaurantRef.get().addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val surprises = documentSnapshot.get("orders") as MutableList<HashMap<String, Any>>?
+                    surprises?.add(surpriseBag.toHashMap())
+                    surprises?.let {
+                        restaurantRef.update("surprises", it)
+                            .addOnSuccessListener {
+                            }
+                            .addOnFailureListener { exception ->
+                            }
+                    }
+                } else {
+                }
             }.addOnFailureListener { exception ->
-                showToast("Error: ${exception.message}", context )
+                showToast("Error: ${exception.message}",context)
+            }
+        }
+    }
+
+    private fun addFariteToFirestore(surpriseBag: SurpriseBag,context: Context) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        userId?.let {
+            val restaurantRef = db.collection("users").document(it)
+
+            // Retrieve the existing surprises list and update it
+
+            restaurantRef.get().addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val surprises = documentSnapshot.get("farites") as MutableList<HashMap<String, Any>>?
+                    surprises?.add(surpriseBag.toHashMap())
+                    surprises?.let {
+                        restaurantRef.update("farites", it)
+                            .addOnSuccessListener {
+                            }
+                            .addOnFailureListener { exception ->
+                            }
+                    }
+                } else {
+                }
+            }.addOnFailureListener { exception ->
+                showToast("Error: ${exception.message}",context)
             }
         }
     }

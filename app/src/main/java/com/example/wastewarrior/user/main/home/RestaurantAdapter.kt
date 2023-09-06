@@ -4,10 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wastewarrior.R
-import com.example.wastewarrior.admin.SurpriseBagAdapter
 import com.example.wastewarrior.models.Restaurant
 
 class RestaurantAdapter(private val restaurantList: List<Restaurant>) :
