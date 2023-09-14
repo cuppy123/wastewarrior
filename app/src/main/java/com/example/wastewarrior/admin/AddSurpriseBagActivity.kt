@@ -30,7 +30,8 @@ class AddSurpriseBagActivity : AppCompatActivity() {
                 name = name,
                 quantity = quantity,
                 isFavourite = false,
-                price = price
+                price = price,
+                category = "xgjx"
             )
 
             // Perform actions to add the new surprise bag to Firestore

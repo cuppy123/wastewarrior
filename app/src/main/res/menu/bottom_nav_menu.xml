@@ -11,12 +11,12 @@
         android:icon="@drawable/shopping_bag_5_1_svgrepo_com"
         android:title="Discover" />
 
+<!--    <item-->
+<!--        android:id="@+id/navigation_notifications3"-->
+<!--        android:icon="@drawable/heart_svgrepo_com"-->
+<!--        android:title="Favourites" />-->
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/heart_svgrepo_com"
-        android:title="Favourites" />
-    <item
-        android:id="@+id/navigation_notifications2"
         android:icon="@drawable/baseline_account_box_24"
         android:title="Profile" />
 

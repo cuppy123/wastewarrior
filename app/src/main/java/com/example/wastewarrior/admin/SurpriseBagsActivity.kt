@@ -3,13 +3,17 @@ package com.example.wastewarrior.admin
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wastewarrior.R
 import com.example.wastewarrior.databinding.ActivitySurpriseBagsBinding
 import com.example.wastewarrior.models.SurpriseBag
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+
 
 class SurpriseBagsActivity : AppCompatActivity() {
 
@@ -28,9 +32,38 @@ class SurpriseBagsActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.surpriseBagsRecyclerView.layoutManager = layoutManager
 
+
+        val chipGroup = binding.chipGroup
+
+        val tagList: List<String> = mutableListOf("Coffee", "Chicken", "Dessert", "Barbeque")
+
+        if (tagList.isNotEmpty()){
+            binding.nocategory.visibility = View.GONE
+            binding.chipGroup.visibility = View.VISIBLE
+        for (tag in tagList) {
+            val chip = Chip(this)
+            chip.text = tag
+            chip.setChipBackgroundColorResource(R.color.teal_200)
+            chip.setChipStrokeColorResource(R.color.teal_700)
+            chip.chipStrokeWidth = resources.getDimension(com.google.android.material.R.dimen.m3_card_stroke_width)
+            chip.setTextColor(resources.getColor(R.color.white))
+
+            // Add a click listener to handle chip click events
+            chip.setOnClickListener { view: View? ->
+                // Handle chip click here
+                val selectedTag = chip.text.toString()
+            }
+            chipGroup.addView(chip)
+        }
+        }
+
+
         // Retrieve surprise bags from Firestore
         retrieveSurpriseBags()
-
+        binding.addChipButton.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this, AddCategoryActivity::class.java)
+            startActivity(intent)
+        })
         binding.floatingActionButton.setOnClickListener {
             val intent = Intent(this, AddSurpriseBagActivity::class.java)
             startActivity(intent)
@@ -53,7 +86,8 @@ class SurpriseBagsActivity : AppCompatActivity() {
                                 val quantity = (it["quantity"] as Long).toInt()
                                 val isFavourite = it["isFavourite"] as Boolean
                                 val price = it["price"] as Double
-                                SurpriseBag(name, quantity, isFavourite, price)
+                                val category = it["price"]
+                                SurpriseBag(name, quantity, isFavourite, price,category.toString() )
                             }
 
                             val surpriseBagsAdapter = SurpriseBagAdapter(surpriseBags)

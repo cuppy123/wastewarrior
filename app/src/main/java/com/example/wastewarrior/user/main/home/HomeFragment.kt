@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
                         val quantity = (surprise["quantity"] as Long).toInt()
                         val isFavourite = surprise["isFavourite"] as Boolean
                         val price = surprise["price"] as Double
-                        SurpriseBag(surpriseName, quantity, isFavourite, price)
+                        SurpriseBag(surpriseName, quantity, isFavourite, price, "hjkl")
                     } ?: emptyList()
 
                     // Create a Restaurant object with the fetched data
